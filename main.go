@@ -15,12 +15,10 @@ func main() {
 	s := newServer()
 	go s.run()
 	r := mux.NewRouter()
+	fs := http.FileServer(http.Dir("./public"))
+	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", fs))
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/" {
-			http.NotFound(w, r)
-			return
-		}
-		http.ServeFile(w, r, "index.html")
+		http.ServeFile(w, r, "./public/index.html")
 	})
 	r.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serve(s, w, r)
