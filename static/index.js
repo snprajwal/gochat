@@ -1,5 +1,4 @@
 window.onload = () => {
-	// handling multiple tabs from same client
 	localStorage.open = Date.now()
 	window.addEventListener('storage', (e) => {
 		if (e.key == "open") {
@@ -12,46 +11,46 @@ window.onload = () => {
 		}
 	})
 
-	// obtaining username
-	let user = prompt("Please enter your username")
-	while (user == "") {
-		user = prompt("Username cannot be empty! Please enter a valid username")
-	}
+  // obtaining username
+  let userName = prompt("Enter your username");
+  let msg = document.getElementById("msg");
+  let log = document.getElementById("log");
+  let conn = new WebSocket("ws://" + document.location.host + "/ws");
+  conn.onclose = (e) => {
+    let item = document.createElement("div");
+    item.innerHTML = "<b>Connection closed.</b>";
+    log.appendChild(item);
+  };
 
-	// handling websocket connection
-	let msg = document.getElementById("msg")
-	let log = document.getElementById("log")
-	let conn = new WebSocket("ws://" + document.location.host + "/ws")
-	conn.onclose = (e) => {
-		let item = document.createElement("div")
-		item.innerHTML = "<b>Connection closed.</b>"
-		log.appendChild(item)
-	}
-	conn.onmessage = (e) => {
-		let raw = e.data.split('\n')
-		for (let i = 0; i < raw.length; i++) {
-			let data = JSON.parse(raw[i])
-			let item = document.createElement("div")
-			if (data.user === user) {
-				item.innerHTML = `<b><font color='blue'>${data.user}</font></b>: ${data.msg}`
+
+
+  conn.onmessage = (e) => {
+    let msgs = e.data.split("\n");
+    for (let i = 0; i < msgs.length; i++) {
+      let data = JSON.parse(msgs[i])
+      console.log(data)
+      let item = document.createElement("div");
+      // item.innerHTML = `<b>${data.userName}</b>: ${data.msg}`
+      if (data.userName === userName) {
+				item.innerHTML = `<b><font color='lightgreen'>${data.userName}</font></b>: ${data.msg}`
 			} else {
-				item.innerHTML = `<b><font color='red'>${data.user}</font></b>: ${data.msg}`
+				item.innerHTML = `<b><font color='red'>${data.userName}</font></b>: ${data.msg}`
 			}
-			log.appendChild(item)
-		}
-	}
-
-	// handling messages
-	document.getElementById("form").onsubmit = () => {
-		if (!conn) {
-			return false
-		}
-		if (!msg.value) {
-			return false
-		}
-		data = JSON.stringify({user, msg: msg.value})
-		conn.send(data)
-		msg.value = ""
-		return false
-	}
-}
+      log.appendChild(item);
+      item.classList.add("msgBubble");
+	    log.scrollTop = log.scrollHeight;
+    }
+  };
+  document.getElementById("form").onsubmit = () => {
+    if (!conn) {
+      return false;
+    }
+    if (!msg.value) {
+      return false;
+    }
+    data = JSON.stringify({userName, msg: msg.value})
+    conn.send(data);
+    msg.value = "";
+    return false;
+  };
+};
