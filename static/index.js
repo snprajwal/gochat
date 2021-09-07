@@ -14,7 +14,11 @@ window.onload = () => {
 			let data = JSON.parse(raw[i])
 			console.log(data)
 			let item = document.createElement("div")
-			item.innerHTML = `<b>${data.user}</b>: ${data.msg}`
+			if (data.user === user) {
+				item.innerHTML = `<b><font color='blue'>${data.user}</font></b>: ${data.msg}`
+			} else {
+				item.innerHTML = `<b><font color='red'>${data.user}</font></b>: ${data.msg}`
+			}
 			log.appendChild(item)
 		}
 	}
