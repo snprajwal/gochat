@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <head>
-    <link rel="stylesheet" href="/static/index.css">
+  <script
+    src="https://kit.fontawesome.com/e2f0041a0b.js"
+    crossorigin="anonymous"
+  ></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;1,600&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<link rel="stylesheet" href="/public/index.css" />
 <body>
+  <div id="container">
     <div id="log"></div>
-    <form id="form">
+      <form id="form">
         <input type="text" id="msg" autofocus />
-        <button>Send</button>
-    </form>
-<script src="/static/index.js"></script>
+        <button><i class="fas 5x fa-arrow-right"></i></button>
+      </form>
+  </div>
+  <script src="/public/index.js"></script>
+</body>
