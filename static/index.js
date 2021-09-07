@@ -1,6 +1,4 @@
 window.onload = () => {
-
-  // handling multiple tabs from same client
 	localStorage.open = Date.now()
 	window.addEventListener('storage', (e) => {
 		if (e.key == "open") {
