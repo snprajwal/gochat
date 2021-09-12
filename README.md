@@ -1,5 +1,6 @@
 # Usage
 
-* `go get github.com/snprajwal/gochat`
-* `go run .`
-* Open `localhost:8080` in the browser
+* `git clone https://github.com/snprajwal/gochat && cd $_`
+* `make build`
+* `make run`
+* Access the app at http://localhost:8080
